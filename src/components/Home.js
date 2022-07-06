@@ -4,7 +4,7 @@ import ToDo from './ToDo';
 
 const Home = () => {
     return (
-        <section className='flex justify-center items-center flex-col'>
+        <section className=''> 
             <Calendar/>
             <ToDo/>
         </section>

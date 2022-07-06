@@ -1,27 +1,29 @@
-import React from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import auth from '../firebase.init';
-import { useSignInWithGoogle } from 'react-firebase-hooks/auth'
+import React from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import auth from "../firebase.init";
+import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import google from "../images/Google.png";
 
 const Login = () => {
+  const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-    const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
-    const location = useLocation()
-    const navigate = useNavigate()
+  let from = location.state?.from?.pathname || "/";
 
-    let from = location.state?.from?.pathname || "/";
+  if (user) {
+    console.log(user);
+    navigate(from, { replace: true });
+  }
 
-    if(user) {
-        console.log(user);
-        navigate(from, { replace: true });
-    }
-
-    return (
-        <section className='my-10 flex justify-center items-center'>
-            <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                <h2 className="text-3xl font-bold text-center mt-5 text-green-600">Login('only google')</h2>
-                <div className="card-body">
-                    <div className="form-control">
+  return (
+    <section className="my-10 flex justify-center h-screen items-center">
+      <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+        <h2 className="text-3xl  text-center mt-5 text-gray-600">
+          login first to continue
+        </h2>
+        <div className="card-body">
+          {/* <div className="form-control">
                         <label className="label">
                             <span className="label-text">Email</span>
                         </label>
@@ -38,14 +40,20 @@ const Login = () => {
                     </div>
                     <div className="form-control mt-6">
                         <button className="btn btn-primary">Login</button>
-                    </div>
-                    <div className="form-control">
-                        <button className="btn btn-primary border-0 hover:bg-green-500 bg-green-600" onClick={ () => signInWithGoogle() }>Continue With Google</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
+                    </div> */}
+          <div className="form-control">
+            <button
+              className="btn btn-primary border-0 hover:bg-green-500 bg-gray-600"
+              onClick={() => signInWithGoogle()}
+            >
+              <img src={google} alt="" />
+              <span className="text-white mx-4">continue With Google</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default Login;
